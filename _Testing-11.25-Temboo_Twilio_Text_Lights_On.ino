@@ -172,10 +172,14 @@ void loop() {
     // Invoke the Temboo client
     GetLastMessageThatContainsChoreo.begin();
 
-    // Set Temboo account credentials
-    GetLastMessageThatContainsChoreo.setAccountName("karenolio");
-    GetLastMessageThatContainsChoreo.setAppKeyName("myFirstApp");
-    GetLastMessageThatContainsChoreo.setAppKey("3546218b287d4140811c2b0426b125a7");
+    // Set Temboo account credentials //compared it to "GetLastMessageThatContains" and see it didn't list out actual credentials, so i'm swapping it out for the general stuff
+    //GetLastMessageThatContainsChoreo.setAccountName("karenolio");
+    //GetLastMessageThatContainsChoreo.setAppKeyName("myFirstApp");
+    //GetLastMessageThatContainsChoreo.setAppKey("3546218b287d4140811c2b0426b125a7");
+    
+    GetLastMessageThatContainsChoreo.setAccountName(TEMBOO_ACCOUNT);
+    GetLastMessageThatContainsChoreo.setAppKeyName(TEMBOO_APP_KEY_NAME);
+    GetLastMessageThatContainsChoreo.setAppKey(TEMBOO_APP_KEY);
 
     // Set profile to use for execution
     // DO WE STILL NEED THIS??
@@ -209,29 +213,26 @@ void loop() {
       if (bodyMsg.substring(17, 19) == "on") { //This only works if the 7th to 9 letters are "on"".
         // This works if you're seinding the message "Lights on"
         // Characters before Lights on are other info from Twilio
-
-
         // Turn lights on
         //digitalWrite(ledPin, HIGH); //turns on debug LED
         digitalWrite(lightsPin, HIGH);
         delay(800);
         digitalWrite(lightsPin, LOW); //Simulated button press for less than a second
-        Console.println("Lights are on");
+        Serial.println("Lights are on");
         //tone(buzzerPin, 2000, 3000); //beeps for 3 seconds
-      }  else if (bodyMsg.substring (17, 20) == "off") { //reads "off" from a message saying "Lights off"
+      }  
+      
+      else if (bodyMsg.substring (17, 20) == "off") { //reads "off" from a message saying "Lights off"
         //digitalWrite(ledPin, LOW); //turns off debug LED
         //tone(buzzerPin, 4200, 1000); //beeps
         digitalWrite(lightsPin, HIGH);
         delay(5000); //simulates a 5 second button press to turn the lights off
         digitalWrite(lightsPin, LOW);
         delay(1000);
-        Console.println("Lights are off");
-
-
+        Serial.println("Lights are off");
       }
-
-
       bodyMsgLast = bodyMsg; //Copies this message to the Last message variable
+      
     } else {
       Serial.println("Identical to Last"); //if identical, do nothing. 
     }
